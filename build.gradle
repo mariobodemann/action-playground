@@ -1,0 +1,28 @@
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+tasks.register('saveLintResultsForSlack') {
+    ext.lintFile = file('app/build/reports/lint-results-release.xml')
+
+    doLast {
+        def output = new File(projectDir, "lint_results_for_slack.txt")
+        def content = ""
+        def issues = new XmlParser().parse(lintFile)
+        issues.each { issue ->
+            content += '* '
+            content += issue.attribute("id")
+            content += ': '
+            content += issue.attribute("message")
+            content += '\n  > '
+            content += issue.location[0].attribute("file")
+            content += '@'
+            content += issue.location[0].attribute("line")
+            content += ':'
+            content += issue.location[0].attribute("column")
+            content += '\n'
+        }
+        output.text = content
+    }
+}
+
