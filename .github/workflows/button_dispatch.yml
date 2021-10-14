@@ -21,7 +21,7 @@ jobs:
             ./gradlew saveLintResultsForSlack
             cat lint_results_for_slack.txt
 
-      - uses: mariobodemann/slack@v1
+      - uses: mariobodemann/slack@v0.0.2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
