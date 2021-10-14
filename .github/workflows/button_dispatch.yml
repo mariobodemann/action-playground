@@ -28,6 +28,9 @@ jobs:
         env:
           MATRIX_CONTEXT: ${{ toJSON(matrix) }}
         run: echo "$MATRIX_CONTEXT"
+
+      - name: Check out repository code
+        uses: actions/checkout@v2
       - name: Report Lint warnings
         run: |
             ./gradlew clean
