@@ -20,11 +20,10 @@ jobs:
         run: |
             ./gradlew saveLintResultsForSlack
             cat lint_results_for_slack.txt
-
       - name: Slack Message those findings
         uses: mariobodemann/slack@v1
           with:
             status: ${{ job.status }}
             message: You rock!
         id: slacking
-        if: {{ always() }}
+        if: ${{ always() }}
