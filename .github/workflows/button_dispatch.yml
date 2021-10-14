@@ -20,7 +20,7 @@ jobs:
         run: |
             ./gradlew saveLintResultsForSlack
             echo 'CUSTOM_MESSAGE<<EOF' >> $GITHUB_ENV
-            cat lint_results_for_slack.txt >> @GITHUB_ENV
+            cat lint_results_for_slack.txt >> $GITHUB_ENV
             echo 'EOF' >> $GITHUB_ENV
 
       - uses: mariobodemann/slack@v0.0.3
