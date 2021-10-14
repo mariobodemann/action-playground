@@ -10,11 +10,11 @@ tasks.register('saveLintResultsForSlack') {
         def content = ""
         def issues = new XmlParser().parse(lintFile)
         issues.each { issue ->
-            content += '* '
+            content += '• '
             content += issue.attribute("id")
-            content += ': '
+            content += '\n ⚠️ '
             content += issue.attribute("message")
-            content += '\n  > '
+            content += '⚠️\n → '
             content += issue.location[0].attribute("file")
             content += '@'
             content += issue.location[0].attribute("line")
