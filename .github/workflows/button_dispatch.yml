@@ -19,11 +19,13 @@ jobs:
         if: ${{ failure() }}
         run: |
             ./gradlew saveLintResultsForSlack
-            cat lint_results_for_slack.txt
+            echo 'CUSTOM_MESSAGE<<EOF' >> $GITHUB_ENV
+            cat lint_results_for_slack.txt 
+            echo 'EOF' >> $GITHUB_ENV
 
       - uses: mariobodemann/slack@v0.0.3
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
-          message: You rock!
+          message: ${{ env.CUSTOM_MESSAGE }}
         if: always()
