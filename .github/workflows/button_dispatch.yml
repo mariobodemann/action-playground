@@ -3,6 +3,8 @@ on: workflow_dispatch
 jobs:
   one:
     runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Check out repository code
         id: checkout
@@ -19,3 +21,10 @@ jobs:
             ./gradlew saveLintResultsForSlack
             cat lint_results_for_slack.txt
 
+      - name: Slack Message those findings
+        uses: mariobodemann/slack@v1
+          with:
+            status: ${{ job.status }}
+            message: You rock!
+        id: slacking
+        if: {{ always() }}
