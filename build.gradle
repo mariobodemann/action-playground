@@ -7,22 +7,26 @@ tasks.register('saveLintResultsForSlack') {
 
     doLast {
         def output = new File(projectDir, "lint_results_for_slack.txt")
-        def content = ""
+        def content = new StringBuffer()
         def issues = new XmlParser().parse(lintFile)
         issues.each { issue ->
-            content += '• '
-            content += issue.attribute("id")
-            content += '\n ⚠️ '
-            content += issue.attribute("message")
-            content += '⚠️\n → '
-            content += issue.location[0].attribute("file")
-            content += '@'
-            content += issue.location[0].attribute("line")
-            content += ':'
-            content += issue.location[0].attribute("column")
-            content += '\n'
+            content.append(
+                String.format(
+                    '⚠️  %s [%s] ⚠️\n' +
+                    ' > %s\n' +
+                    ' > %s\n' +
+                    ' → %s@%s%s\n\n',
+                    issue.attribute("message"),
+                    issue.attribute("id"),
+                    issue.attribute("errorLine1"),
+                    issue.attribute("errorLine2"),
+                    issue.location[0].attribute("file").replace(output.getParent()+'/', ''),
+                    issue.location[0].attribute("line"),
+                    issue.location[0].attribute("column")
+                )
+            )
         }
-        output.text = content
+        output.text = content.toString()
     }
 }
 

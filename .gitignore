@@ -15,3 +15,4 @@
 local.properties
 .idea/
 lint_results_for_slack.txt
+app/build/
