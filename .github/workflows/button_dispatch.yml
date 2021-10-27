@@ -27,5 +27,5 @@ jobs:
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
-          message: ${{ env.CUSTOM_MESSAGE }}
+          message: $(ls)
         if: always()
