@@ -25,7 +25,5 @@ jobs:
 
       - uses: mariobodemann/slack@v0.0.3
         with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
           message: ${{ env.CUSTOM_MESSAGE }}
         if: always()
