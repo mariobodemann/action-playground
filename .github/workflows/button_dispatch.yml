@@ -9,11 +9,14 @@ jobs:
       - name: Check out repository code
         id: checkout
         uses: actions/checkout@v2
+        
       - name: Linting
         id: linting
         run: |
             ./gradlew clean
             ./gradlew lintRelease
+        if: ${{ false }}
+        
       - name: Report Lint warnings
         id: report
         if: ${{ failure() }}
@@ -23,9 +26,10 @@ jobs:
             cat lint_results_for_slack.txt >> $GITHUB_ENV
             echo 'EOF' >> $GITHUB_ENV
 
-      - uses: mariobodemann/slack@v0.0.3
+      - name: Slack Shenanigans
+        uses: mariobodemann/slack@v0.0.3
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
-          message: $(ls)
+          message: ${{ ls }}
         if: always()
