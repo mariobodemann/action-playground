@@ -1,4 +1,4 @@
-on: workflow_dispatch
+on: [push, workflow_dispatch]
 
 jobs:
   one:
@@ -31,5 +31,5 @@ jobs:
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
-          message: ${{ ls }}
+          message: ls
         if: always()
